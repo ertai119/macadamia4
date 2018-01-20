@@ -1,0 +1,18 @@
+﻿<Properties StartupConfiguration="{11FD2339-89A1-973C-5DEC-289DAD77460D}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/FieldOfView.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Controller.cs" Line="12" Column="17" />
+      <File FileName="Assets/Scripts/FieldOfView.cs" Line="128" Column="22" />
+      <File FileName="Assets/Editor/FieldOfViewEditor.cs" Line="13" Column="31" />
+      <File FileName="Assets/Shaders/Stencil Object.shader" Line="24" Column="22" />
+      <File FileName="Assets/Shaders/Stencil Mask.shader" Line="16" Column="16" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.macadamia4 PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>

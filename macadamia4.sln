@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio for Mac
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "macadamia4", "macadamia4.csproj", "{11FD2339-89A1-973C-5DEC-289DAD77460D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "macadamia4.Editor", "macadamia4.Editor.csproj", "{4D797F73-F861-68C8-E399-8C81DD379434}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11FD2339-89A1-973C-5DEC-289DAD77460D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11FD2339-89A1-973C-5DEC-289DAD77460D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11FD2339-89A1-973C-5DEC-289DAD77460D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11FD2339-89A1-973C-5DEC-289DAD77460D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D797F73-F861-68C8-E399-8C81DD379434}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D797F73-F861-68C8-E399-8C81DD379434}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D797F73-F861-68C8-E399-8C81DD379434}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D797F73-F861-68C8-E399-8C81DD379434}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
