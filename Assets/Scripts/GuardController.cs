@@ -8,31 +8,63 @@ public class GuardController : MonoBehaviour {
     
     NavMeshAgent agent;
     Vector3 goalPosition;
-
-	// Use this for initialization
+    bool patrollMode = false;
+	
 	void Start ()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = false;
 	}
 	
+    public void PatrolMode()
+    {
+        if (patrollMode)
+            return;
+        
+        patrollMode = true;
+        SetGoalPos(GetComponent<PatrolManager>().GetNextPos());
+    }
+
+    public void TrackingMode(Vector3 targetPos)
+    {
+        patrollMode = false;
+        SetGoalPos(targetPos);
+    }
+
     public void SetGoalPos(Vector3 position)
     {
         goalPosition = position;
 
-        agent.enabled = true;
-        agent.destination = goalPosition;
+        if (agent)
+        {
+            agent.enabled = true;
+            agent.destination = goalPosition;
+        }
     }
 
-	// Update is called once per frame
-	void Update ()
+	void Update()
     {
-        if (agent == null)
-            return;
-        
-        if (!agent.pathPending && agent.remainingDistance < 1.0f)
+        if (agent.enabled)
         {
-            agent.enabled = false;
-        }		
+            if (!agent.pathPending && agent.remainingDistance < 1.0f)
+            {
+                if (patrollMode)
+                {
+                    if (GetComponent<PatrolManager>().HasPath())
+                    {
+                        SetGoalPos(GetComponent<PatrolManager>().GetNextPos());
+                    }
+                    else
+                    {
+                        agent.enabled = false;
+                    }
+                }
+                else
+                {
+                    agent.enabled = false;
+                }
+            }    
+        }
+        		
 	}
 }

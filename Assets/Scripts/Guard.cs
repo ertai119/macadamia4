@@ -8,7 +8,7 @@ public class Guard : MonoBehaviour {
 	public float waitSec = .3f;
 	public float turnSpeed = 90;
 
-    Vector3 backPosition;
+    Vector3 spawnPos;
 
 	public Light spotLight;
 	public float viewDistance;
@@ -17,13 +17,12 @@ public class Guard : MonoBehaviour {
 	float viewAngle;
 
 	Transform player;
-	public Transform pathHolder;
 	Color originalSpotlightColor;
     Color originalColor;
 
 	void Start(){
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
-        backPosition = transform.position;
+        spawnPos = transform.position;
 
         originalColor = GetComponent<Renderer>().material.color;
 
@@ -33,45 +32,38 @@ public class Guard : MonoBehaviour {
             viewAngle = spotLight.spotAngle;    
         }		
 
-        if (pathHolder != null)
+        StartCoroutine(AIUpdate(0.5f));    
+	}
+
+    IEnumerator AIUpdate(float tickSec)
+    {
+        while (true)
         {
-            Vector3[] waypoints = new Vector3[pathHolder.childCount];
-            for (int i = 0; i < waypoints.Length; i++)
+            GuardController controller = GetComponent<GuardController>();
+            ChangeMaterial changeMtl = GetComponent<ChangeMaterial>();
+
+            if (SearchAroundPlayer() && FarFromSpawnPos() == false)
             {
-                waypoints[i] = pathHolder.GetChild(i).position;
-                waypoints[i].y = transform.position.y;
+                controller.TrackingMode(player.transform.position);    
+                changeMtl.Change(1);
+            }
+            else
+            {
+                controller.PatrolMode();
+                changeMtl.Change(0);
             }
 
-            StartCoroutine(FollowPath(waypoints));    
-        }		
-	}
+            yield return new WaitForSeconds(tickSec);
+        }
+    }
 
 	void Update()
     {
-        if (SearchAroundPlayer())
-        {
-            GetComponent<Renderer>().material.color = Color.red;
-            GetComponent<ChangeMaterial>().Change(1);
-		}
-        else
-        {
-            GetComponent<Renderer>().material.color = originalColor;
-            GetComponent<ChangeMaterial>().Change(0);
-        }
-
-        if (FarFromSpawnPos())
-        {
-            GetComponent<GuardController>().SetGoalPos(backPosition);
-        }
-        else
-        {
-            GetComponent<GuardController>().SetGoalPos(player.transform.position);
-        }
 	}
 
     bool FarFromSpawnPos()
     {
-        if (Vector3.Distance(backPosition, player.position) > maxFollowDst)
+        if (Vector3.Distance(spawnPos, player.position) > maxFollowDst)
         {
             return true;
         }
@@ -133,22 +125,12 @@ public class Guard : MonoBehaviour {
 		}
 	}
 
-	void OnDrawGizmos()
+    void OnDrawGizmos()
     {
-        if (pathHolder == null)
-            return;
-        
-		Vector3 startPos = pathHolder.GetChild (0).position;
-		Vector3 prevPos = startPos;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(spawnPos, maxFollowDst);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, viewDistance);
+    }
 
-		foreach (Transform waypoint in pathHolder) {
-			Gizmos.DrawSphere (waypoint.position, .3f);
-			Gizmos.DrawLine (prevPos, waypoint.position);
-			prevPos = waypoint.position;
-		}
-		Gizmos.DrawLine (startPos, prevPos);
-
-		Gizmos.color = Color.red;
-		Gizmos.DrawLine (transform.position, transform.forward * viewDistance);
-	}
 }
